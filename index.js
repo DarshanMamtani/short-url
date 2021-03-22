@@ -14,10 +14,10 @@ const port = process.env.PORT || 3000;
 const static = express.static('public');
 // app.use() is Middlewear: Will be excuted before serving any request/end-points
 app.use(static);
-app.use(bodyParser.json);
+app.use(bodyParser.json());
 
 app.post("/shortUrl", (req, res) => {
-    console.log(req.body.url);
+    console.log(req.body);
     // await ShortUrl.create({
     //     full: req.body.url
     // })

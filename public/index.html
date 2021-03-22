@@ -15,15 +15,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
+    <script>
+        function sendReq(event){
+            event.preventDefault();
+            const url = document.getElementById("url").value;
+            const data = { url };
+            axios.post("/shortUrl", data).then(res => {
+                console.log(res);
+            });
+        }
+    </script>
     <title>Short URL</title>
 </head>
 
 <body>
     <h1 class="text-center">Short URL</h1>
-    <form action="/shortUrl" method="POST" class="input-group mb-3">
+    <form onsubmit="sendReq(event)" class="input-group mb-3">
         <input type="text" id="url" class="form-control" placeholder="Enter URL" aria-label="Enter URL"
             aria-describedby="button-addon2">
-        <button onclick="sendReq()" class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
     </form>
 </body>
 
