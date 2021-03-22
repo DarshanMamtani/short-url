@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+    <!-- axios: used to send get,put,post requests -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <title>Short URL</title>
+</head>
+
+<body>
+    <h1 class="text-center">Short URL</h1>
+    <form action="/shortUrl" method="POST" class="input-group mb-3">
+        <input type="text" id="url" class="form-control" placeholder="Enter URL" aria-label="Enter URL"
+            aria-describedby="button-addon2">
+        <button onclick="sendReq()" class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+    </form>
+</body>
+
+</html>
