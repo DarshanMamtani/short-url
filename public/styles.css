@@ -3,7 +3,11 @@ h1{
     margin-top: 50px;
 }
 
-div{
+form{
     width: 80vw !important;
     margin: 10px auto;
+}
+table{
+    width: 80vw !important;
+    margin: 15px auto;
 }
