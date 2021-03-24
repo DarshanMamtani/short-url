@@ -16,35 +16,51 @@
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
     <script>
-        function sendReq(event){
+        function sendReq(event) {
             event.preventDefault();
             const url = document.getElementById("url").value;
             const data = { url };
             axios.post("/shortUrl", data).then(res => {
                 const data = res.data;
-                for(let i = 0; i<data.length; i++){
-                    const obj = data[i];
-                    const table = document.querySelector("table");
-                    const tr = document.createElement("tr");
-
-                    const td1 = document.createElement("td");
-                    const a = document.createElement("a");
-                    a.setAttribute("href", obj.full);
-                    td1.append(a);
-                    a.textContent = obj.full;
-
-                    const td2 = document.createElement("td");
-                    const a2 = document.createElement("a");
-                    a2.setAttribute("href", obj.short);
-                    td2.append(a2);
-                    a2.textContent = obj.short;
-                    
-                    tr.append(td1);
-                    tr.append(td2);
-                    table.append(tr);
-
-                }
+                addToTable(data);
             });
+        }
+
+        function showUrl(e) {
+            e.preventDefault();
+
+            axios.post("/showUrls").then(res => {
+                const data = res.data;
+                console.log(data);
+                addToTable(data);
+            });
+        }
+
+        function addToTable(data) {
+            for (let i = 0; i < data.length; i++) {
+                const obj = data[i];
+                const tbody = document.querySelector("tbody");
+                const tr = document.createElement("tr");
+
+                const td1 = document.createElement("td");
+                const a = document.createElement("a");
+                a.setAttribute("href", obj.full);
+                a.setAttribute("target", "_blank");
+                td1.append(a);
+                a.textContent = obj.full;
+
+                const td2 = document.createElement("td");
+                const a2 = document.createElement("a");
+                a2.setAttribute("href", obj.short);
+                a2.setAttribute("target", "_blank");
+                td2.append(a2);
+                a2.textContent = obj.short;
+
+                tr.append(td1);
+                tr.append(td2);
+                tbody.append(tr);
+
+            }
         }
     </script>
     <title>Short URL</title>
@@ -58,12 +74,20 @@
         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Short It!</button>
     </form>
 
-    <table class="table table-striped table-responsive">
-        <thead>
-            <th>Long URL</th>
-            <th>Short URL</th>
-        </thead>
-    </table>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button onclick="showUrl(event)" class="btn btn-primary" type="button">Show recently Shorten URLs</button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <th>Long URL</th>
+                <th>Short URL</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

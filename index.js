@@ -36,6 +36,11 @@ app.get("/:shortUrl", async (req, res) => {
     }
 });
 
+app.post("/showUrls", async (req, res) => {
+    const shortUrls = await ShortUrl.find().sort({ $natural: -1 }).limit(5);
+    res.send(shortUrls);
+});
+
 app.listen(port, () => {
     console.log(`Server Started at http://localhost:${port}`);
 });
