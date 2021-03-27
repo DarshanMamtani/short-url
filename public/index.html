@@ -1,93 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+        <!-- axios: used to send get,put,post requests -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <!-- CSS -->
+        <link rel="stylesheet" href="styles.css">
+        <script>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-        crossorigin="anonymous"></script>
-    <!-- axios: used to send get,put,post requests -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <!-- CSS -->
-    <link rel="stylesheet" href="styles.css">
-    <script>
-        function sendReq(event) {
-            event.preventDefault();
-            const url = document.getElementById("url").value;
-            const data = { url };
-            axios.post("/shortUrl", data).then(res => {
-                const data = res.data;
-                addToTable(data);
-            });
-        }
-
-        function showUrl(e) {
-            e.preventDefault();
-
-            axios.post("/showUrls").then(res => {
-                const data = res.data;
-                console.log(data);
-                addToTable(data);
-            });
-        }
-
-        function addToTable(data) {
-            for (let i = 0; i < data.length; i++) {
-                const obj = data[i];
-                const tbody = document.querySelector("tbody");
-                const tr = document.createElement("tr");
-
-                const td1 = document.createElement("td");
-                const a = document.createElement("a");
-                a.setAttribute("href", obj.full);
-                a.setAttribute("target", "_blank");
-                td1.append(a);
-                a.textContent = obj.full;
-
-                const td2 = document.createElement("td");
-                const a2 = document.createElement("a");
-                a2.setAttribute("href", obj.short);
-                a2.setAttribute("target", "_blank");
-                td2.append(a2);
-                a2.textContent = obj.short;
-
-                tr.append(td1);
-                tr.append(td2);
-                tbody.append(tr);
-
+            // function to send post request to short the url
+            function sendReq(event) {
+                event.preventDefault();
+                const url = document.getElementById("url").value;
+                const data = { url };
+                axios.post("/shortUrl", data).then(res => {
+                    const data = res.data;
+                    addToTable(data);
+                });
             }
-        }
-    </script>
-    <title>Short URL</title>
-</head>
 
-<body>
-    <h1 class="text-center">Short URL</h1>
-    <form onsubmit="sendReq(event)" class="input-group mb-3">
-        <input type="text" id="url" class="form-control" placeholder="Enter URL" aria-label="Enter URL"
-            aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Short It!</button>
-    </form>
+            // function to show the previously shorten urls
+            function showUrl(e) {
+                e.preventDefault();
 
-    <div class="d-grid gap-2 col-6 mx-auto">
-        <button onclick="showUrl(event)" class="btn btn-primary" type="button">Show recently Shorten URLs</button>
-    </div>
+                axios.post("/showUrls").then(res => {
+                    const data = res.data;
+                    console.log(data);
+                    addToTable(data);
+                });
+            }
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <th>Long URL</th>
-                <th>Short URL</th>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-</body>
+            // function to add the response to table
+            function addToTable(data) {
+                for (let i = 0; i < data.length; i++) {
+                    const obj = data[i];
+                    const tbody = document.querySelector("tbody");
+                    const tr = document.createElement("tr");
 
+                    const td1 = document.createElement("td");
+                    const a = document.createElement("a");
+                    a.setAttribute("href", obj.full);
+                    a.setAttribute("target", "_blank");
+                    td1.append(a);
+                    a.textContent = obj.full;
+
+                    const td2 = document.createElement("td");
+                    const a2 = document.createElement("a");
+                    a2.setAttribute("href", obj.short);
+                    a2.setAttribute("target", "_blank");
+                    td2.append(a2);
+                    a2.textContent = obj.short;
+
+                    tr.append(td1);
+                    tr.append(td2);
+                    tbody.append(tr);
+
+                }
+            }
+        </script>
+        <title>Short URL</title>
+    </head>
+
+    <body>
+
+        <!-- To set wave background -->
+        <section>
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
+            <div class="wave wave4"></div>
+        </section>
+
+        <!-- Heading -->
+        <h1 class="text-center">Short URL</h1>
+
+        <!-- Form input field and submit button -->
+        <form onsubmit="sendReq(event)" class="input-group mb-3">
+            <input type="text" id="url" class="form-control" placeholder="Enter URL" aria-label="Enter URL"
+                aria-describedby="button-addon2">
+            <button class="btn btn-success" type="submit" id="button-addon2">Short It!</button>
+        </form>
+
+        <!-- button to show the previously shorten urls -->
+        <div class="d-grid gap-2 col-9 mx-auto">
+            <button onclick="showUrl(event)" class="btn btn-success" type="button">Show recently Shorten URLs</button>
+        </div>
+
+        <!-- table to show the long anf short urls -->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <th>Long URL</th>
+                    <th>Short URL</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
 </html>
