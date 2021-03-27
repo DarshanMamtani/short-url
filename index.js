@@ -6,11 +6,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Connecting to Database || Arguments passed to avoid depricated warnings
-mongoose.connect('mongodb://localhost/shortUrl', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/shortUrl', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-
 
 
 // Used to serve static files like HTML
